@@ -2,10 +2,10 @@ import math
 
 # Resume data
 resumes = [
-    {"name": "Sneha Singh", "raw_skills": "python, machine learning, sql, pandas, numpy"},
-    {"name": "Meera Kapoor", "raw_skills": "java, deep learning, html/css, javascript, react"},
-    {"name": "Karan Malhotra", "raw_skills": "python, machine learning, sql, pandas, numpy"},
-    {"name": "Arjun Sharma", "raw_skills": "python, ml, data-viz, matplotlib, power bi"}
+    {"raw_skills": "python, machine learning, sql, pandas, numpy"},
+    {"raw_skills": "java, deep learning, html/css, javascript, react"},
+    {"raw_skills": "python, machine learning, sql, pandas, numpy"},
+    {"raw_skills": "python, ml, data-viz, matplotlib, power bi"}
 ]
 
 SKILL_ALIASES = {
@@ -189,17 +189,17 @@ def calculateresumejdsimilarity(resumetfidf, jd_vector):
 
 job_descriptions = [
     {
-        "name": "JD-1",
+        "name": "Job Description 1",
         "required_skills": ["python", "machine learning", "sql", "pandas", "numpy"],
         "preferred_skills": ["nlp", "bert", "feature engineering", "statistics"],
     },
     {
-        "name": "JD-2",
+        "name": "Job Description 2",
         "required_skills": ["java", "spring boot", "mysql", "microservices", "docker", "kubernetes"],
         "preferred_skills": ["rest api", "ci/cd", "redis"],
     },
     {
-        "name": "JD-3",
+        "name": "Job Description 3",
         "required_skills": ["javascript", "react", "vue", "typescript", "rest api", "html/css"],
         "preferred_skills": ["node.js", "graphql", "redux", "jest", "aws"],
     },
@@ -212,7 +212,7 @@ def build_normalized_resumes(resumes_list):
         normalized = normalizeskills(resume.get("raw_skills", ""))
         normalized_resumes.append(
             {
-                "name": resume.get("name", f"Resume {index}"),
+                "name": f"Resume {index}",
                 "raw_skills": resume.get("raw_skills", ""),
                 "normalized_skills": deduplicateskills(normalized),
             }
@@ -250,7 +250,15 @@ def main():
             key=lambda item: item["similarity"],
             reverse=True,
         )
-        print(f"{jd_name} Result: Top 3 Candidates with Matching Scores.")
-        candidates = [f"{match['resume']}({match['similarity']})" for match in top_matches[:3]]
-        print(", ".join(candidates))
-        print("*")
+        print(f"{jd_name}:")
+        for match in top_matches[:3]:
+            print(f"{match['resume']}: {match['similarity']}")
+        print()
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+
